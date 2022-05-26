@@ -228,6 +228,9 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
         getRandomAnswerList()
 
     const judgeFunc = (num) => {
+        audioList.buzzAudio.pause();
+        timerList.map(timer => clearTimeout(timer))
+        
         if (num == doneCount + correctNum) {
 
             parentObject.current.style.pointerEvents = 'none'
@@ -259,12 +262,13 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
         }
         else {
             //wrong function...
-            audioList.bodyAudio2.currentTime = 0
-
-            setTimeout(() => {
-                clickedFunc(0)
+            audioList.buzzAudio.currentTime = 0
+            audioList.buzzAudio.play();
+            timerList[3] = setTimeout(() => {
+                audioList.bodyAudio2.currentTime = 0
                 audioList.bodyAudio2.play();
-            }, 500);
+            }, 1000);
+
         }
     }
 

@@ -172,9 +172,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
             starRefs[stepCount].current.setClass('show')
             stepCount++
         }
-        else {
-            audioList.buzzAudio.play();
-        }
+     
         setSecondShow(true)
     }
 
