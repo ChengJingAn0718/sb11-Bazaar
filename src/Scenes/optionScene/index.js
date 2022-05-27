@@ -93,6 +93,7 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
         audioList.bodyAudio1.pause()
         audioList.bodyAudio2.pause()
 
+        audioList.buzzAudio.pause();
 
         timerList.map(timer => clearTimeout(timer))
 
@@ -200,14 +201,11 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
             }
 
             else {
-                audioList.clapAudio.play()
                 setTimeout(() => {
                     nextFunc()
-
                     audioList.clapAudio.pause()
                     audioList.clapAudio.currentTime = 0;
-
-                }, 4000);
+                }, 2000);
 
             }
         }, 2000);
@@ -230,7 +228,7 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
         getRandomAnswerList()
 
     const judgeFunc = (num) => {
-        audioList.buzzAudio.pause();
+        
         timerList.map(timer => clearTimeout(timer))
 
         if (num == doneCount + correctNum) {

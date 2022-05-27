@@ -85,7 +85,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
             setSceneLoad(true)
         },
         sceneStart: () => {
-            timerList[0] = setTimeout(activeBtnFunc, 5000);
+            timerList[0] = setTimeout(activeBtnFunc, 2500);
 
             setRepeatType(2)
 
