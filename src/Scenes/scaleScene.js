@@ -3,8 +3,10 @@ import "../stylesheets/styles.css";
 import BaseImage from '../components/BaseImage';
 import { UserContext } from '../components/BaseShot';
 import { getAudioPath, prePathUrl } from "../components/CommonFunctions";
+import { MaskComponent } from "../components/CommonComponents"
 
 let currentMaskNum = 0;
+let subMaskNum = 0;
 const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition, bgLoaded }, ref) => {
 
     const audioList = useContext(UserContext)
@@ -15,13 +17,13 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
     const currentImage = useRef()
 
     const maskPathList = [
-        ['02', '03', '04'],
+        ['sub'],
         ['00'],
         ['05'],
-        ['06', '07'],
+        ['sub'],
         ['06'],
-        ['13', '15', '14'],
-        ['09', '10'],
+        ['sub'],
+        ['sub'],
         ['11'],
         ['12'],
     ]
@@ -43,27 +45,37 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
         { x: -0.5, y: 0.6, s: 2.5 }, // 9
     ]
 
-    // const outLinePosList = [ // p-path
-    //     ['02a', '03a', '04a'],
-    //     ['05a'],
-    //     [],
-    //     [],
-    //     ['08a', '08b', '08c'],
-    //     ['09a', '10a'],
-    //     [],
-    //     ['12a'],
-    // ]
+    const subMarkInfoList = [
+        [
+            { p: '02', t: 1000, ps: 0, pl: 0.0, pt: 0.0 },
+            { p: '03', t: 3000, ps: 0, pl: 0.0, pt: 0.0 },
+            { p: '04', t: 4300, ps: 0, pl: 0.0, pt: 0.0 },
+        ],
+        [
+            { p: '06', t: 2500, ps: 0, pl: 0.0, pt: 0.0 },
+            { p: '07', t: 5000, ps: 0, pl: 0.0, pt: 0.0 },
+        ],
+        [
+            { p: '13', t: 2800, ps: 0, pl: 0.0, pt: 0.0 },
+            { p: '15', t: 4000, ps: 0, pl: 0.0, pt: 0.0 },
+            { p: '14', t: 5000, ps: 0, pl: 0.0, pt: 0.0 },
+        ],
+        [
+            { p: '09', t: 2500, ps: 0, pl: 0.0, pt: 0.0 },
+            { p: '10', t: 4000, ps: 0, pl: 0.0, pt: 0.0 },
+        ],
+    ]
 
     const marginPosList = [
         {},
         {},
-        { s: 1, l: 0.4, t: 0.4 },
+        { s: 1, l: 0.1, t: 0.2 },
         {},
-        { s: 1, l: 0.6, t: 0.4 },
+        { s: 1, l: -0.2, t: 0.0 },
 
         {}, //vagetable
         {},
-        { s: 1, l: 0.7, t: 0.2 }, // 9
+        { s: 1, l: -0.1, t: 0.2 }, // 9
         {},
     ]
 
@@ -79,6 +91,12 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
         ['10', '11'],
     ]
 
+    const bodyAudioList = [audioList.bodyAudio1, audioList.bodyAudio2, audioList.bodyAudio3, audioList.bodyAudio4]
+
+
+    const [isSubMaskLoaded, setSubMaskLoaded] = useState(false)
+    const subMaskRefList = Array.from({ length: 3 }, ref => useRef())
+
     const [isSceneLoad, setSceneLoad] = useState(false)
 
 
@@ -88,28 +106,29 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
         },
         sceneStart: () => {
             baseObject.current.className = 'aniObject'
-            audioList.bodyAudio1.src = prePathUrl() + getAudioPath('intro', '02');
-            audioList.bodyAudio2.src = prePathUrl() + getAudioPath('intro', '01');
-            audioList.bodyAudio3.src = prePathUrl() + getAudioPath('intro', '03');
+            audioList.bodyAudio1.src = getAudioPath('intro', audioPathList[currentMaskNum][0]);
+            audioList.bodyAudio2.src = getAudioPath('intro', '01');
 
             blackWhiteObject.current.style.WebkitMaskImage = 'url("' +
                 returnImgPath(maskPathList[currentMaskNum][0], true) + '")'
 
-
-
             blackWhiteObject.current.style.transition = "0.5s"
             currentImage.current.style.transition = '0.5s'
 
+
             setTimeout(() => {
+                setSubMaskLoaded(true)
                 audioList.bodyAudio2.play()
                 loadFunc()
                 setTimeout(() => {
                     showIndividualImage()
                 }, audioList.bodyAudio2.duration * 1000 + 1000);
             }, 3000);
+     
         },
         sceneEnd: () => {
             currentMaskNum = 0;
+            subMaskNum = 0;
             setSceneLoad(false)
         }
     }))
@@ -123,9 +142,10 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
         2, 1.4, 1.4, 1.4, 1.4, 1.4, 1, 1, 1, 1.4, 1.4, 1.4, 1
     ]
     function showIndividualImage() {
+        blackWhiteObject.current.className = 'hideObject'
+        let currentMaskName = maskPathList[currentMaskNum]
 
         baseObject.current.style.transition = durationList[currentMaskNum] + 's'
-
 
         baseObject.current.style.transform =
             'translate(' + maskTransformList[currentMaskNum].x * 100 + '%,'
@@ -133,18 +153,38 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
             'scale(' + maskTransformList[currentMaskNum].s + ') '
 
         setTimeout(() => {
-            let timeDuration = audioList.bodyAudio1.duration * 1000 + 500
-            let isSubAudio = false
+            let timeDuration = 4000
 
-            if (audioPathList[currentMaskNum].length > 1) {
-                timeDuration += (audioList.bodyAudio3.duration * 1000 - 1000)
-                isSubAudio = true;
+            audioPathList[currentMaskNum].map((value, index) => {
+                timeDuration += bodyAudioList[index].duration * 1000 + 500
             }
+            )
 
-            blackWhiteObject.current.className = 'show'
-            colorObject.current.className = 'hide'
+            if (currentMaskName != 'sub') {
+                blackWhiteObject.current.className = 'show'
+                colorObject.current.className = 'hide'
+            }
+            else {
+                subMarkInfoList[subMaskNum].map((value, index) => {
+                    setTimeout(() => {
+                        if (index == 0)
+                            colorObject.current.className = 'hide'
+                        if (index > 0)
+                            subMaskRefList[index - 1].current.setClass('hide')
 
+                        subMaskRefList[index].current.setClass('appear')
+                        if (value.ps != null) {
+                            subMaskRefList[index].current.setStyle({
+                                transform:
+                                    "translate(" + _baseGeo.width * value.pl / 100 + "px,"
+                                    + _baseGeo.height * value.pt / 100 + "px)"
+                                    + "scale(" + (1 + value.ps / 100) + ") "
+                            })
 
+                        }
+                    }, value.t);
+                })
+            }
 
             if (maskPathList[currentMaskNum].length > 1) {
                 maskPathList[currentMaskNum].map((value, index) => {
@@ -153,6 +193,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                             blackWhiteObject.current.style.WebkitMaskImage = 'url("' +
                                 returnImgPath(maskPathList[currentMaskNum][index], true) + '")'
                         }
+
                     }, (audioList.bodyAudio1.duration * 1000 + 1000) / maskPathList[currentMaskNum].length * index);
                 }
                 )
@@ -160,38 +201,42 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
 
             setTimeout(() => {
 
-                if (marginPosList[currentMaskNum].s) {
+                if (marginPosList[currentMaskNum].s != null) {
                     currentImage.current.style.transform =
-                        "translate(" + _baseGeo.width * maskTransformList[currentMaskNum].s * (0.02 -
-                            0.04 * marginPosList[currentMaskNum].l) / 2 + "px,"
-                        + _baseGeo.height * maskTransformList[currentMaskNum].s * (0.02
-                            - 0.04 * marginPosList[currentMaskNum].t) / 2 + "px)"
-                        + "scale(1.04) "
+                        "translate(" + _baseGeo.width * marginPosList[currentMaskNum].l / 100 + "px,"
+                        + _baseGeo.height * marginPosList[currentMaskNum].t / 100 + "px)"
+                        + "scale(" + (1 + marginPosList[currentMaskNum].s / 100) + ") "
                 }
 
-                audioList.bodyAudio1.play().catch(error => { });
-                if (isSubAudio)
+
+                let time = 0
+
+                audioPathList[currentMaskNum].map((value, index) => {
                     setTimeout(() => {
-                        currentImage.current.style.transform = "scale(1)"
+                        bodyAudioList[index].play()
+                    }, time);
+                    time += bodyAudioList[index].duration * 1000 + 500
+                })
 
-                        setTimeout(() => {
-                            colorObject.current.className = 'show'
-                        }, 300);
 
-                        setTimeout(() => {
-                            audioList.bodyAudio3.play();
-                        }, 500);
-                    }, audioList.bodyAudio1.duration * 1000 + 500);
 
                 setTimeout(() => {
-                    if (currentMaskNum < audioPathList.length - 1) {
-                        audioList.bodyAudio1.src = prePathUrl() + getAudioPath('intro', audioPathList[currentMaskNum + 1][0]);
-                        if (audioPathList[currentMaskNum + 1].length > 1)
-                            audioList.bodyAudio3.src = prePathUrl() + getAudioPath('intro', audioPathList[currentMaskNum + 1][1]);
-                    }
+                    if (currentMaskNum < audioPathList.length - 1)
+                        audioPathList[currentMaskNum + 1].map((value, index) => {
+                            bodyAudioList[index].src = getAudioPath('intro', value);
+                        })
 
                     setTimeout(() => {
                         currentImage.current.style.transform = "scale(1)"
+                        if (currentMaskName == 'sub') {
+                            subMaskRefList.map(mask => {
+                                if (mask.current) {
+                                    mask.current.setStyle({
+                                        transform: "scale(1)"
+                                    })
+                                }
+                            })
+                        }
 
                         setTimeout(() => {
                             colorObject.current.className = 'show'
@@ -213,9 +258,30 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                                 }, 2000);
                             }
                             else {
+
+                                if (currentMaskName == 'sub') {
+                                    subMaskRefList.map(mask => {
+                                        if (mask.current) {
+
+                                            setTimeout(() => {
+                                                mask.current.setClass('hide')
+                                            }, 500);
+                                        }
+                                    })
+                                    subMaskNum++
+                                }
+
                                 currentMaskNum++;
-                                blackWhiteObject.current.style.WebkitMaskImage = 'url("' +
-                                    returnImgPath(maskPathList[currentMaskNum][0], true) + '")'
+
+                                currentMaskName = maskPathList[currentMaskNum]
+                                if (currentMaskName != 'sub')
+                                    blackWhiteObject.current.style.WebkitMaskImage = 'url("' +
+                                        returnImgPath(maskPathList[currentMaskNum], true) + '")'
+                                else
+                                    subMarkInfoList[subMaskNum].map((value, index) => {
+                                        subMaskRefList[index].current.setMask(returnImgPath(value.p, true))
+                                    })
+
                                 blackWhiteObject.current.className = 'hide'
                                 setTimeout(() => {
                                     showIndividualImage()
@@ -303,6 +369,15 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
 
                         </div>
                     </div>
+                    {
+                        isSubMaskLoaded && subMarkInfoList[0].map((value, index) =>
+                            <MaskComponent
+                                ref={subMaskRefList[index]}
+                                maskPath={returnImgPath(value.p, true)}
+                            />
+
+                        )
+                    }
                     <div
                         ref={colorObject}
                         style={{
