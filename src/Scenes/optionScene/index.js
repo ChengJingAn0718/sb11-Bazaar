@@ -143,8 +143,10 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
 
     const fomartFunc = () => {
         doneCount += optionGroup[stepCount]
+        clickedFunc(1)
+
         setTimeout(() => {
-            clickedFunc(1)
+
 
             if (stepCount < 3) {
                 parentObject.current.className = 'disapear'
@@ -188,13 +190,13 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
                             audioList.bodyAudio2.play();
                             timerList[2] = setTimeout(() => {
                                 startRepeatAudio()
-                                audioList.commonAudio1.play();
+                                // audioList.commonAudio1.play();
                             }, audioList.bodyAudio2.duration * 1000 + 300);
 
                         }, audioList.bodyAudio1.duration * 1000 + 300);
                     }, 1500);
 
-                }, 300);
+                }, 500);
             }
 
             else {
@@ -208,7 +210,7 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
                 }, 4000);
 
             }
-        }, 1000);
+        }, 2000);
     }
 
     const getRandomAnswerList = () => {
@@ -230,7 +232,7 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
     const judgeFunc = (num) => {
         audioList.buzzAudio.pause();
         timerList.map(timer => clearTimeout(timer))
-        
+
         if (num == doneCount + correctNum) {
 
             parentObject.current.style.pointerEvents = 'none'
@@ -245,7 +247,9 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
             audioList.tingAudio.play();
 
             if (correctNum == answerList.length)
-                fomartFunc()
+                setTimeout(() => {
+                    fomartFunc()
+                }, 1000);
             else {
                 audioList.bodyAudio2.src = getAudioPath('Option/q' + (stepCount + 1), audioPathList[stepCount][correctNum + 1])
                 timerList[0] = setTimeout(() => {
@@ -255,9 +259,9 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
                     audioList.bodyAudio2.play();
                     timerList[2] = setTimeout(() => {
                         startRepeatAudio()
-                        audioList.commonAudio1.play();
+                        // audioList.commonAudio1.play();
                     }, audioList.bodyAudio2.duration * 1000 + 300);
-                }, 1500);
+                }, 2000);
             }
         }
         else {

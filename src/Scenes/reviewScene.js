@@ -262,9 +262,8 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
                         top: _baseGeo.top + 'px',
                     }}
                 >
-
                     <BaseImage
-                        url={'bg/base.png'}
+                        url={'bg/green_bg.png'}
                     />
                     <div
                         style={{
@@ -278,7 +277,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
                             width={"100%"}
                             draggable={false}
                             onLoad={loadImage}
-                            src={prePathUrl() + 'images/Word/title.png'}
+                            src={prePathUrl() + 'images/word/title.png'}
                         />
                     </div>
 
