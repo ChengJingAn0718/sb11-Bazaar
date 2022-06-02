@@ -216,19 +216,34 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
         answerList = []
         let needLength = optionType == 0 ? 3 : 2;
 
-        while (answerList.length != needLength) {
-            let randomNumber = Math.floor(Math.random() * needLength);
-            if (!answerList.includes(doneCount + randomNumber)) {
-                answerList.push(doneCount + randomNumber)
-            }
-        }
+        const defaultRandomList = [
+            [
+                [1, 0]
+            ],
+            [
+                [2, 0, 1], [1, 2, 0]
+            ],
+            [
+                [4, 3, 2, 1], [4, 3, 1, 2],
+                [2, 1, 4, 3], [2, 1, 3, 4],
+                [3, 4, 2, 1], [3, 4, 1, 2]
+            ]
+        ]
+
+        let currentNum = needLength - 2
+
+        let randomNumber = Math.floor(Math.random() * defaultRandomList[currentNum].length);
+
+        defaultRandomList[currentNum][randomNumber].map(value => {
+            answerList.push(value + doneCount)
+        })
     }
 
     if (answerList.length == 0)
         getRandomAnswerList()
 
     const judgeFunc = (num) => {
-        
+
         timerList.map(timer => clearTimeout(timer))
 
         if (num == doneCount + correctNum) {
