@@ -2,7 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import "../stylesheets/styles.css";
 import BaseImage from '../components/BaseImage';
 import { UserContext } from '../components/BaseShot';
-import { getAudioPath, prePathUrl } from "../components/CommonFunctions";
+import { getAudioPath, prePathUrl, setExtraVolume } from "../components/CommonFunctions";
 import { MaskComponent } from "../components/CommonComponents"
 
 let currentMaskNum = 0;
@@ -117,6 +117,12 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
 
 
             setTimeout(() => {
+                setExtraVolume(audioList.bodyAudio1, 2)
+                setExtraVolume(audioList.bodyAudio1, 2)
+                setExtraVolume(audioList.bodyAudio1, 2)
+            }, 2500);
+
+            setTimeout(() => {
                 setSubMaskLoaded(true)
                 audioList.bodyAudio2.play()
                 loadFunc()
@@ -124,7 +130,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                     showIndividualImage()
                 }, audioList.bodyAudio2.duration * 1000 + 1000);
             }, 3000);
-     
+
         },
         sceneEnd: () => {
             currentMaskNum = 0;
