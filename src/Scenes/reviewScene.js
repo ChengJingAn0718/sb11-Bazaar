@@ -88,8 +88,9 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
             timerList[0] = setTimeout(activeBtnFunc, 2500);
 
             for (let i = 0; i < 14; i++)
-                setExtraVolume(audioList[i], 2)
-            setExtraVolume(commonAudio3)
+                setExtraVolume(audioList[i], 3.3)
+
+            setExtraVolume(audioList.commonAudio3, 3)
 
             setRepeatType(2)
 

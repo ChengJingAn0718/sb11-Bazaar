@@ -23,6 +23,10 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc }, ref) => {
             setSceneLoad(true)
         },
         sceneStart: () => {
+
+            setExtraVolume(audioList.bodyAudio1, 3)
+            setExtraVolume(audioList.bodyAudio2, 3)
+
             audioList.bodyAudio1.src = prePathUrl() + 'sounds/main/common/middle.mp3'
 
             parentRef.current.className = 'aniObject'

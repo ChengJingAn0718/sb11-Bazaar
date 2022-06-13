@@ -115,11 +115,9 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
             blackWhiteObject.current.style.transition = "0.5s"
             currentImage.current.style.transition = '0.5s'
 
-
+            setExtraVolume(audioList.bodyAudio1, 1.7)
             setTimeout(() => {
-                setExtraVolume(audioList.bodyAudio1, 2)
-                setExtraVolume(audioList.bodyAudio1, 2)
-                setExtraVolume(audioList.bodyAudio1, 2)
+                setExtraVolume(audioList.bodyAudio1, 2.5)
             }, 2500);
 
             setTimeout(() => {
@@ -128,6 +126,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                 loadFunc()
                 setTimeout(() => {
                     showIndividualImage()
+                    setExtraVolume(audioList.bodyAudio2, 2.5)
                 }, audioList.bodyAudio2.duration * 1000 + 1000);
             }, 3000);
 
@@ -250,6 +249,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
 
                         setTimeout(() => {
                             if (currentMaskNum == maskPathList.length - 1) {
+                                // if (currentMaskNum == 0) {
                                 setTimeout(() => {
                                     baseObject.current.style.transition = '2s'
 
