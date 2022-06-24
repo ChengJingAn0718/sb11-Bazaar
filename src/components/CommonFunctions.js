@@ -17,9 +17,7 @@ export function initialAudio(audioList) {
     }
 }
 
-export function returnAudioPath(num) {
-    return prePathUrl() + "sounds/SB_37_Audio_" + num + '.mp3';
-}
+
 
 export function getMaskStyle(info) {
 
@@ -159,14 +157,14 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 } else {
     // production code
     sharePrePath = './'
+    // sharePrePath = './ee01_md_bzr_ex/'
 }
 
 export const prePathUrl = () => sharePrePath;
 
-let soundPrefix = 'Episode_11_Bazaar_'
 
 export function getAudioPath(folderName, fileNum) {
-    return prePathUrl() + "sounds/main/" + folderName + '/' + soundPrefix + fileNum + '.mp3';
+    return prePathUrl() + "sounds/main/" + folderName + '/' +  fileNum + '.mp3';
 }
 
 
@@ -189,7 +187,7 @@ export function setRepeatType(type) {
     repeatType = type
 }
 
-export function startRepeatAudio(pastTime = 7000, intervalTime = 10000) {
+export function startRepeatAudio(pastTime = 0, intervalTime = 15000) {
 
     clearTimeout(repeartTimer)
     clearInterval(repeatInterval)

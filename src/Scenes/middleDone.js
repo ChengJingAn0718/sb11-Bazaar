@@ -24,8 +24,6 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc }, ref) => {
         },
         sceneStart: () => {
 
-            setExtraVolume(audioList.bodyAudio1, 3)
-            setExtraVolume(audioList.bodyAudio2, 3)
 
             audioList.bodyAudio1.src = prePathUrl() + 'sounds/main/common/middle.mp3'
 
@@ -33,6 +31,8 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc }, ref) => {
             spakleRef.current.className = 'excellentText'
 
             loadFunc();
+
+            setExtraVolume(audioList.bodyAudio1, 8)
 
             timerList[0] = setTimeout(() => {
                 audioList.bodyAudio1.play().catch(error => { });

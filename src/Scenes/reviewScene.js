@@ -87,15 +87,12 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
         sceneStart: () => {
             timerList[0] = setTimeout(activeBtnFunc, 2500);
 
-            for (let i = 0; i < 14; i++)
-                setExtraVolume(audioList[i], 3.3)
 
-            setExtraVolume(audioList.commonAudio3, 3)
+            setExtraVolume(audioList.commonAudio3, 8)
 
             setRepeatType(2)
 
             audioList.bodyAudio1.src = prePathUrl() + "sounds/main/common/review0.mp3"
-            audioList.bodyAudio2.src = prePathUrl() + "sounds/main/common/review1.mp3"
 
             imageCount = 0;
             isEffectPassed = true;
@@ -133,12 +130,9 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
                 timerList[8] = setTimeout(() => {
                     audioList.commonAudio3.play()
                     startRepeatAudio()
-
                 }, audioList.bodyAudio1.duration * 1000 + 300);
-
             }, 1500);
 
-            // baseObject.current.className = 'aniObject'
         }
     }
 
@@ -194,7 +188,13 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
 
         clickedList.push(index)
 
-        audioList[index].play();
+        setExtraVolume(audioList[index], 6)
+
+        setTimeout(() => {
+            audioList[index].play();
+        }, 50);
+        
+
         if (clickedList.length == doneCount + wordGround[stepCount]) {
             setTimeout(() => {
                 if (stepCount != wordGround.length - 1)
@@ -338,7 +338,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
                                                     left: (0.082 - textInfoList[index].l) * _geo.width,
                                                     top: _geo.height * (0.03 - textInfoList[index].t)
                                                 }}
-                                                src={prePathUrl() + "images/Word/set" + returnSetName(index) + "/SB11_Summery_icon_" + textInfoList[index].path + ".png"}
+                                                src={prePathUrl() + "images/word/set" + returnSetName(index) + "/sb11_summery_icon_" + textInfoList[index].path + ".png"}
 
                                             />
                                         </div>
@@ -353,7 +353,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
                                             top: _geo.height * (0.03 + gapList[index].y)
                                         }}
                                         onLoad={index < wordGround[0] ? loadImage : null}
-                                        src={prePathUrl() + "images/Word/set" + returnSetName(index) + "/SB11_Summery_icon_" + iconList[index] + ".png"}
+                                        src={prePathUrl() + "images/word/set" + returnSetName(index) + "/sb11_summery_icon_" + iconList[index] + ".png"}
                                     />
                                     <div
                                         ref={clickRefList[index]}

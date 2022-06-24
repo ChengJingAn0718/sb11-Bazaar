@@ -80,14 +80,14 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
     ]
 
     const audioPathList = [
-        ['02'],
-        ['03'],
-        ['04'],
-        ['05'],
-        ['06'],
-        ['07'],
-        ['08'],
-        ['09'],
+        ['2'],
+        ['3'],
+        ['4'],
+        ['5'],
+        ['6'],
+        ['7'],
+        ['8'],
+        ['9'],
         ['10', '11'],
     ]
 
@@ -107,17 +107,17 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
         sceneStart: () => {
             baseObject.current.className = 'aniObject'
             audioList.bodyAudio1.src = getAudioPath('intro', audioPathList[currentMaskNum][0]);
-            audioList.bodyAudio2.src = getAudioPath('intro', '01');
+            audioList.bodyAudio2.src = getAudioPath('intro', '1');
 
             blackWhiteObject.current.style.WebkitMaskImage = 'url("' +
-                returnImgPath(maskPathList[currentMaskNum][0], true) + '")'
+                returnImgPath('00', true) + '")'
 
             blackWhiteObject.current.style.transition = "0.5s"
             currentImage.current.style.transition = '0.5s'
 
-            setExtraVolume(audioList.bodyAudio1, 1.7)
+            setExtraVolume(audioList.bodyAudio2, 5)
             setTimeout(() => {
-                setExtraVolume(audioList.bodyAudio1, 2.5)
+                setExtraVolume(audioList.bodyAudio1, 6)
             }, 2500);
 
             setTimeout(() => {
@@ -125,8 +125,9 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                 audioList.bodyAudio2.play()
                 loadFunc()
                 setTimeout(() => {
+                    // nextFunc()
                     showIndividualImage()
-                    setExtraVolume(audioList.bodyAudio2, 2.5)
+                    setExtraVolume(audioList.bodyAudio2, 6)
                 }, audioList.bodyAudio2.duration * 1000 + 1000);
             }, 3000);
 
@@ -139,8 +140,8 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
     }))
 
     function returnImgPath(imgName, isAbs = false) {
-        return isAbs ? (prePathUrl() + 'images/intro/SB11_intro_' + imgName + '.png')
-            : ('intro/SB11_intro_' + imgName + '.png');
+        return isAbs ? (prePathUrl() + 'images/intro/sb11_intro_' + imgName + '.png')
+            : ('intro/sb11_intro_' + imgName + '.png');
     }
 
     const durationList = [
@@ -342,7 +343,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                             left: '0%',
                             top: '0%',
                             WebkitMaskImage: 'url("' +
-                                returnImgPath(maskPathList[currentMaskNum][0], true)
+                                returnImgPath('00', true)
                                 + '")',
                             WebkitMaskSize: '100% 100%',
                             WebkitMaskRepeat: "no-repeat"
@@ -361,17 +362,6 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                             <BaseImage
                                 url={returnImgPath('01')}
                             />
-
-                            {/* {
-                        outLineRefList.map(
-                            (value, index) =>
-                                <BaseImage
-                                    className='hideObject'
-                                    ref={outLineRefList[index]}
-                                />
-                        )
-
-                    } */}
 
                         </div>
                     </div>

@@ -44,16 +44,18 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
         sceneStart: () => {
 
 
-            setExtraVolume(audioList.commonAudio2, 2.5)
-            setExtraVolume(audioList.commonAudio1, 2.5)
+            setExtraVolume(audioList.commonAudio2, 6)
+            setExtraVolume(audioList.commonAudio1, 6)
             setExtraVolume(audioList.successAudio, 2)
-            
-            setExtraVolume(audioList.buzzAudio, 1.5)
-            setExtraVolume(audioList.tingAudio, 2)
 
-            setExtraVolume(audioList.yeahAudio, 1.2)
-            setExtraVolume(audioList.clapAudio, 1.2)
-            
+            setExtraVolume(audioList.bodyAudio2, 8)
+
+            setExtraVolume(audioList.buzzAudio, 2.5)
+            setExtraVolume(audioList.tingAudio, 2.5)
+
+            setExtraVolume(audioList.yeahAudio, 2)
+            setExtraVolume(audioList.clapAudio, 2)
+
             parentRef.current.className = 'aniObject'
 
 
@@ -103,12 +105,13 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
 
     const showControlFunc = () => {
 
-        blackWhiteObject.current.style.WebkitMaskImage = 'url("' + prePathUrl() + 'images/Questions/q' + (stepCount + 2) + '/mask.png")'
-        firstImgRef.current.setUrl('Questions/q' + (stepCount + 2) + '/q0.png');
-        aniImageList.map((image, index) => {
-            if (index < 3)
-                image.current.setUrl('Questions/q' + (stepCount + 2) + '/q' + (index + 1) + '.png')
-        })
+        if (stepCount < 2) {
+            blackWhiteObject.current.style.WebkitMaskImage = 'url("' + prePathUrl() + 'images/questions/q' + (stepCount + 2) + '/mask.png")'
+            aniImageList.map((image, index) => {
+                if (index < 3)
+                    image.current.setUrl('questions/q' + (stepCount + 2) + '/q' + (index + 1) + '.png')
+            })
+        }
 
         timerList[2] = setTimeout(() => {
             audioList.commonAudio2.play();
@@ -124,7 +127,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
         aniImageList[3].current.setClass('hideObject')
         blackWhiteObject.current.className = 'show halfOpacity'
 
-        aniImageList[3].current.setUrl('Questions/q' + (stepCount + 1) + '/q4.png')
+        aniImageList[3].current.setUrl('questions/q' + (stepCount + 1) + '/q4.png')
 
         timerList[3] = setTimeout(() => {
             audioList.bodyAudio1.play().catch(error => { });
@@ -148,7 +151,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
 
         stepCount++
         if (stepCount < audioPathList.length)
-            audioList.bodyAudio1.src = getAudioPath('Question/q' + (stepCount + 1), audioPathList[stepCount][0])  //question
+            audioList.bodyAudio1.src = getAudioPath('question/q' + (stepCount + 1), audioPathList[stepCount][0])  //question
 
         audioList.bodyAudio2.play().catch(error => { });
         buttonRefs.current.style.pointerEvents = 'none'
@@ -158,7 +161,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
             starRefs[stepCount + 3].current.setClass('show')
 
             if (stepCount < audioPathList.length)
-                audioList.bodyAudio2.src = getAudioPath('Question/q' + (stepCount + 1), audioPathList[stepCount][1])  //question
+                audioList.bodyAudio2.src = getAudioPath('question/q' + (stepCount + 1), audioPathList[stepCount][1])  //question
 
 
             setTimeout(() => {
@@ -187,6 +190,8 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
             audioList.tingAudio.play().catch(error => { })
             starRefs[stepCount].current.setClass('show')
             stepCount++
+
+            // nextFunc()
         }
 
         setSecondShow(true)
@@ -222,8 +227,8 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
 
         }, 500);
 
-        audioList.bodyAudio1.src = getAudioPath('Question/q' + (stepCount + 1), audioPathList[stepCount][0])  //question
-        audioList.bodyAudio2.src = getAudioPath('Question/q' + (stepCount + 1), audioPathList[stepCount][1])  //answer
+        audioList.bodyAudio1.src = getAudioPath('question/q' + (stepCount + 1), audioPathList[stepCount][0])  //question
+        audioList.bodyAudio2.src = getAudioPath('question/q' + (stepCount + 1), audioPathList[stepCount][1])  //answer
     }
 
     return (
@@ -272,11 +277,11 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
                                             , cursor: "pointer",
                                         }}>
                                         <BaseImage
-                                            url={'Icon/SB13_Progress_Bar_Gray.png'}
+                                            url={'icon/sb13_progress_bar_gray.png'}
                                         />
                                         <BaseImage
                                             ref={starRefs[6 - value]}
-                                            url={'Icon/SB13_Progress_Bar.png'}
+                                            url={'icon/sb13_progress_bar.png'}
                                             className='hideObject'
                                         />
                                     </div>)
@@ -300,7 +305,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
 
                                 <BaseImage
                                     ref={firstImgRef}
-                                    url={"Questions/q1/q0.png"}
+                                    url={"questions/q1/q0.png"}
                                 />
 
                                 <div
@@ -311,7 +316,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
                                         , height: '100%',
                                         left: '0%',
                                         top: '0%',
-                                        WebkitMaskImage: 'url(' + prePathUrl() + 'images/Questions/q1/mask.png)',
+                                        WebkitMaskImage: 'url(' + prePathUrl() + 'images/questions/q1/mask.png)',
                                         WebkitMaskSize: '100% 100%',
                                         WebkitMaskRepeat: "no-repeat",
                                         background: 'black',
@@ -326,7 +331,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
                                             ref={aniImageList[value - 1]}
                                             scale={1}
                                             posInfo={{ l: 0, t: 0 }}
-                                            url={"Questions/q1/q" + value + ".png"}
+                                            url={"questions/q1/q" + value + ".png"}
                                         />
                                     )
                                 }
@@ -340,7 +345,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
                                     }}>
                                     <BaseImage
                                         ref={aniImageList[3]}
-                                        url={"Questions/q1/q4.png"}
+                                        url={"questions/q1/q4.png"}
                                     />
                                 </div>
 
@@ -368,7 +373,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
                                                 top: '-32%'
                                             }}
                                             draggable={false}
-                                            src={prePathUrl() + 'images/Buttons/Answer_Button.svg'}
+                                            src={prePathUrl() + 'images/buttons/answer_button.svg'}
                                         />
                                     </div>
                                 </div>

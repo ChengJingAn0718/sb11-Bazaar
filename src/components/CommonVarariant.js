@@ -17,7 +17,7 @@ const textInfoList = [
     { path: '03a', s: 0.19, l: -0.015, t: -0.065, m: 1, lm: -53 },
 ]
 
-export const iconPrefix = 'SB11_Summery_icon_'
+export const iconPrefix = 'sb11_summery_icon_'
 
 export const optionPathList = [
     ['q1', '01', '01a'],

@@ -112,8 +112,8 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
 
     React.useImperativeHandle(ref, () => ({
         startGame: () => {
-            audioList.bodyAudio1.src = getAudioPath('Option/q' + (stepCount + 1), audioPathList[stepCount][correctNum])
-            audioList.bodyAudio2.src = getAudioPath('Option/q' + (stepCount + 1), audioPathList[stepCount][correctNum + 1])
+            audioList.bodyAudio1.src = getAudioPath('option/q' + (stepCount + 1), audioPathList[stepCount][correctNum])
+            audioList.bodyAudio2.src = getAudioPath('option/q' + (stepCount + 1), audioPathList[stepCount][correctNum + 1])
 
             setPrimaryAudio(audioList.bodyAudio2)
             setRepeatAudio(audioList.commonAudio1)
@@ -154,8 +154,8 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
                 correctNum = 0;
                 stepCount++;
 
-                audioList.bodyAudio2.src = getAudioPath('Option/q' + (stepCount + 1), audioPathList[stepCount][correctNum + 1])
-                audioList.bodyAudio1.src = getAudioPath('Option/q' + (stepCount + 1), audioPathList[stepCount][correctNum])
+                audioList.bodyAudio2.src = getAudioPath('option/q' + (stepCount + 1), audioPathList[stepCount][correctNum + 1])
+                audioList.bodyAudio1.src = getAudioPath('option/q' + (stepCount + 1), audioPathList[stepCount][correctNum])
 
                 setTimeout(() => {
 
@@ -264,7 +264,7 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
                     fomartFunc()
                 }, 1000);
             else {
-                audioList.bodyAudio2.src = getAudioPath('Option/q' + (stepCount + 1), audioPathList[stepCount][correctNum + 1])
+                audioList.bodyAudio2.src = getAudioPath('option/q' + (stepCount + 1), audioPathList[stepCount][correctNum + 1])
                 timerList[0] = setTimeout(() => {
                     itemRefList[doneCount + correctNum].current.className = 'appear'
                     parentObject.current.style.pointerEvents = ''
@@ -325,7 +325,7 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
                                 b: 0.09
                             }}
                             ref={textRefList[index]}
-                            url={"Option/" + value[0] + "/" + iconPrefix + value[2] + ".png"}
+                            url={"option/" + value[0] + "/" + iconPrefix + value[2] + ".png"}
                         />
 
 
@@ -353,7 +353,7 @@ const OptionScene = React.forwardRef(({ nextFunc, clickedFunc, _geo }, ref) => {
                         }}>
                         <BaseImage
                             posInfo={{ l: 0, t: 0 }}
-                            url={"Option/" + value[0] + "/" + iconPrefix + value[1] + ".png"}
+                            url={"option/" + value[0] + "/" + iconPrefix + value[1] + ".png"}
                         />
                     </div>
                 )
