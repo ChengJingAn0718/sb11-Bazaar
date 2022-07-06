@@ -21,24 +21,24 @@ let clickedList = []
 let wordGround = [6, 5, 3]
 
 const posInfoList = [
-    { x: 2, y: 40 },
-    { x: 33, y: 40 },
-    { x: 64, y: 40, m: true },
+    { x: 5, y: 40 },
+    { x: 34, y: 40 },
+    { x: 63, y: 40, m: true },
 
-    { x: 2, y: 70 },
-    { x: 33, y: 70 },
+    { x: 5, y: 70 },
+    { x: 34, y: 70 },
     { x: 64, y: 70, m: true },
 
-    { x: 2, y: 40 },
-    { x: 33, y: 40 },
-    { x: 64, y: 40, m: true },
+    { x: 5, y: 40 },
+    { x: 34, y: 40 },
+    { x: 63, y: 40, m: true },
 
     { x: 18, y: 70 },
     { x: 50, y: 70 },
 
-    { x: 2, y: 55 },
-    { x: 33, y: 55 },
-    { x: 64, y: 55, m: true },
+    { x: 5, y: 55 },
+    { x: 34, y: 55 },
+    { x: 63, y: 55, m: true },
 ]
 
 let doneCount = 0
@@ -193,7 +193,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
         setTimeout(() => {
             audioList[index].play();
         }, 50);
-        
+
 
         if (clickedList.length == doneCount + wordGround[stepCount]) {
             setTimeout(() => {
@@ -208,6 +208,32 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
         }
 
         setShowLater(true)
+
+    }
+
+    const testFunction = (groupNum, isClicked) => {
+
+        setShowLater(true)
+
+        setTimeout(() => {
+            let fromCount = 0, toCount = 0;
+            wordGround.map((value, index) => {
+                if (index < groupNum)
+                    fromCount += value
+            })
+
+            toCount = fromCount + wordGround[groupNum]
+
+            wordBodyList.map((value, index) => {
+                if (index >= fromCount && index < toCount) {
+                    value.current.className = 'showObject'
+                    if (isClicked)
+                        clickFunc(index)
+                }
+                else
+                    value.current.className = 'hideObject'
+            })
+        }, 500);
 
     }
 

@@ -12,7 +12,7 @@ export function initialAudio(audioList) {
         audioList[allkeys[i]].play().catch(error => { })
             .catch(error => {
             })
-        setExtraVolume(audioList[allkeys[i]],  2)
+        setExtraVolume(audioList[allkeys[i]], 2)
         audioList[allkeys[i]].pause()
     }
 }
@@ -164,7 +164,7 @@ export const prePathUrl = () => sharePrePath;
 
 
 export function getAudioPath(folderName, fileNum) {
-    return prePathUrl() + "sounds/main/" + folderName + '/' +  fileNum + '.mp3';
+    return prePathUrl() + "sounds/main/" + folderName + '/' + fileNum + '.mp3';
 }
 
 
